@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+"""Commit written-up solutions, dated to the day they were solved.
+
+    ./log 628      # commit that problem
+    ./log          # commit every written-up solution not yet committed
+
+The commit date comes from the solution's date folder, so a problem written up
+later still lands on the day it was actually solved. Drafts, files whose code
+fence is still empty, are refused. Nothing is pushed.
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import subprocess
+import sys
+from datetime import date, datetime, time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts"))
+
+from repo import REPO_ROOT, all_solutions  # noqa: E402
+
+GENERATE = REPO_ROOT / "scripts" / "generate_index.py"
+README = "README.md"
+EVENING = time(20, 0)
+
+
+def git(*args: str, at: str | None = None) -> str:
+    """Run git in the repo, optionally stamping author and committer dates."""
+    env = dict(os.environ)
+    if at:
+        env["GIT_AUTHOR_DATE"] = env["GIT_COMMITTER_DATE"] = at
+    done = subprocess.run(
+        ["git", "-C", str(REPO_ROOT), *args], capture_output=True, text=True, env=env
+    )
+    if done.returncode:
+        sys.exit(done.stderr.strip() or f"git {' '.join(args)} failed")
+    return done.stdout
+
+
+def changed_paths() -> set[str]:
+    """Paths git sees as untracked or modified.
+
+    `-uall` stops an untracked directory collapsing to one entry, which would
+    hide the files inside it.
+    """
+    listed = git("status", "--porcelain", "-uall", "-z")
+    return {entry[3:] for entry in listed.split("\0") if len(entry) > 3}
+
+
+def stamp(day: str) -> str:
+    """When to date the commit: now if it's today, otherwise that evening.
+
+    The fixed evening time keeps a backdated commit newer than its parent.
+    """
+    solved = date.fromisoformat(day)
+    when = datetime.now() if solved == date.today() else datetime.combine(solved, EVENING)
+    return when.astimezone().isoformat()
+
+
+def regenerate() -> None:
+    done = subprocess.run(
+        [sys.executable, str(GENERATE), "--tracked"], capture_output=True, text=True
+    )
+    if done.returncode:
+        sys.exit(done.stderr.strip() or "scripts/generate_index.py failed")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("number", nargs="?", help="problem number (default: all pending)")
+    args = ap.parse_args()
+
+    # Every file, not one per problem, so a second write-up of a problem solved
+    # twice still gets committed instead of being silently deduped away.
+    everything = all_solutions()
+    changed = changed_paths()
+    pending = [r for r in everything if not r["draft"] and r["path"] in changed]
+
+    if args.number:
+        wanted = args.number.strip()
+        pending = [r for r in pending if r["id"] == wanted]
+        if not pending:
+            match = [r for r in everything if r["id"] == wanted]
+            if match and all(r["draft"] for r in match):
+                sys.exit(f"{match[0]['path']} has no code in it yet.")
+            sys.exit(f"Nothing to commit for problem {wanted}.")
+
+    if not pending:
+        print("Nothing to commit. Every written-up solution is already in.")
+        return
+
+    pending.sort(key=lambda r: (r["date"], int(r["id"])))
+
+    for rec in pending:
+        # Stage first so the index counts this solution but not ones still
+        # waiting behind it, keeping each commit's README true at that point.
+        git("add", "--", rec["path"])
+        regenerate()
+        git("add", "--", README)
+        message = f"feat: {rec['id']} {rec['title'].lower()}"
+        git("commit", "--quiet", "-m", message, at=stamp(rec["date"]))
+        print(f"  {message}   ({rec['date']})")
+
+    print("\nNot pushed. Run `git push` when you're ready.")
+
+
+if __name__ == "__main__":
+    main()

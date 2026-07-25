@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""Scaffold today's solution file for a LeetCode problem.
+
+    ./new 1                                          # by problem number
+    ./new two-sum                                    # or by slug
+    ./new https://leetcode.com/problems/two-sum/     # or by URL
+    ./new 1 --py                                     # Python code fence
+    ./new 1 --date 2026-07-25                        # backdate it
+
+Pulls the id, title and difficulty from LeetCode and fills in template.md at
+`<year>/<year>-<month>/<date>/<question_id>.md`.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+import urllib.error
+import urllib.request
+from datetime import date
+from pathlib import Path
+from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts"))
+
+from repo import REPO_ROOT, scaffold  # noqa: E402
+
+GRAPHQL = "https://leetcode.com/graphql"
+QUESTION = """
+query question($titleSlug: String!) {
+  question(titleSlug: $titleSlug) {
+    questionFrontendId
+    title
+    titleSlug
+    difficulty
+    isPaidOnly
+  }
+}
+"""
+
+# There is no lookup-by-number endpoint, so search and keep the exact id match.
+# Searching "1" also returns 10, 100, 1000.
+SEARCH = """
+query search($filters: QuestionListFilterInput) {
+  questionList(categorySlug: "", skip: 0, limit: 20, filters: $filters) {
+    data { questionFrontendId title titleSlug difficulty isPaidOnly }
+  }
+}
+"""
+
+
+def slugify(arg: str) -> str:
+    """Accept a bare slug, a problem URL, or a title-ish string."""
+    if "leetcode.com" in arg:
+        m = re.search(r"/problems/([^/?#]+)", arg)
+        if not m:
+            sys.exit(f"Could not find a problem slug in: {arg}")
+        return m.group(1)
+    return arg.strip().strip("/").lower().replace(" ", "-")
+
+
+def solve_date(raw: str | None) -> date:
+    if not raw:
+        return date.today()
+    try:
+        return date.fromisoformat(raw)
+    except ValueError:
+        sys.exit(f"--date must be YYYY-MM-DD, got: {raw}")
+
+
+def graphql(query: str, variables: dict[str, Any], referer: str) -> dict[str, Any]:
+    request = urllib.request.Request(
+        GRAPHQL,
+        data=json.dumps({"query": query, "variables": variables}).encode(),
+        headers={
+            "Content-Type": "application/json",
+            # LeetCode rejects requests without a Referer from its own site.
+            "Referer": referer,
+            "User-Agent": "Mozilla/5.0",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            body = json.load(response)
+    except (urllib.error.URLError, TimeoutError) as e:
+        sys.exit(f"Could not reach LeetCode: {e}")
+    except json.JSONDecodeError:
+        sys.exit("LeetCode did not return JSON. It may be rate limiting or down.")
+
+    if body.get("errors"):
+        sys.exit(f"LeetCode rejected the query: {body['errors'][0].get('message', '')}")
+    return body.get("data") or {}
+
+
+def by_number(number: str) -> dict[str, Any]:
+    data = graphql(
+        SEARCH,
+        {"filters": {"searchKeywords": number}},
+        "https://leetcode.com/problemset/",
+    )
+    found = (data.get("questionList") or {}).get("data") or []
+    for q in found:
+        if q["questionFrontendId"] == number:
+            return q
+    sys.exit(f"No problem numbered {number} on LeetCode.")
+
+
+def by_slug(slug: str) -> dict[str, Any]:
+    data = graphql(
+        QUESTION, {"titleSlug": slug}, f"https://leetcode.com/problems/{slug}/"
+    )
+    question = data.get("question")
+    if not question:
+        sys.exit(f"No such problem: '{slug}'. Check the slug in the problem URL.")
+    return question
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("problem", help="problem number, slug, or leetcode.com URL")
+    ap.add_argument("--py", action="store_true", help="Python code fence instead of C++")
+    ap.add_argument("--date", help="solve date as YYYY-MM-DD (default: today)")
+    ap.add_argument("-f", "--force", action="store_true", help="overwrite an existing file")
+    args = ap.parse_args()
+
+    day = solve_date(args.date)
+    problem = args.problem.strip()
+    q = by_number(problem) if problem.isdigit() else by_slug(slugify(problem))
+
+    out = (
+        REPO_ROOT
+        / f"{day:%Y}"
+        / f"{day:%Y-%m}"
+        / f"{day:%Y-%m-%d}"
+        / f"{q['questionFrontendId']}.md"
+    )
+    if out.exists() and not args.force:
+        sys.exit(f"{out.relative_to(REPO_ROOT)} already exists. Pass --force to overwrite.")
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(
+        scaffold(
+            title=q["title"],
+            question_id=q["questionFrontendId"],
+            slug=q["titleSlug"],
+            difficulty=q["difficulty"],
+            lang="python" if args.py else "cpp",
+        ),
+        encoding="utf-8",
+    )
+
+    print(f"{out.relative_to(REPO_ROOT)}  {q['title']} ({q['difficulty']})")
+    if q["isPaidOnly"]:
+        print("note: premium-only problem, the link won't open for everyone.")
+
+
+if __name__ == "__main__":
+    main()

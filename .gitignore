@@ -1,0 +1,17 @@
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.ruff_cache/
+.venv/
+venv/
+
+# Scratch binaries from compiling a solution locally
+a.out
+*.o
+*.dSYM/
+
+# Editors
+.idea/
+.vscode/

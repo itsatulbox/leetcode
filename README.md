@@ -4,11 +4,12 @@ daily leetcode
 
 <!-- INDEX:START -->
 
-**2 problems** &nbsp;·&nbsp; 2 Easy &nbsp;·&nbsp; 0 Medium &nbsp;·&nbsp; 0 Hard
+**3 problems** &nbsp;·&nbsp; 3 Easy &nbsp;·&nbsp; 0 Medium &nbsp;·&nbsp; 0 Hard
 
 | # | Problem | Difficulty | Lang | Date | Solution |
 |---|---------|------------|------|------|----------|
 | 628 | [Maximum Product of Three Numbers](https://leetcode.com/problems/maximum-product-of-three-numbers/) | Easy | C++ | 2026-07-26 | [solution](2026/2026-07/2026-07-26/628.md) |
+| 1464 | [Maximum Product of Two Elements in an Array](https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/) | Easy | C++ | 2026-07-27 | [solution](2026/2026-07/2026-07-27/1464.md) |
 | 3536 | [Maximum Product of Two Digits](https://leetcode.com/problems/maximum-product-of-two-digits/) | Easy | C++ | 2026-07-26 | [solution](2026/2026-07/2026-07-26/3536.md) |
 
 <!-- INDEX:END -->

@@ -4,7 +4,7 @@ daily leetcode
 
 <!-- INDEX:START -->
 
-**9 problems** &nbsp;·&nbsp; 5 Easy &nbsp;·&nbsp; 4 Medium &nbsp;·&nbsp; 0 Hard
+**10 problems** &nbsp;·&nbsp; 6 Easy &nbsp;·&nbsp; 4 Medium &nbsp;·&nbsp; 0 Hard
 
 | # | Problem | Difficulty | Lang | Date | Solution |
 |---|---------|------------|------|------|----------|
@@ -17,5 +17,6 @@ daily leetcode
 | 3016 | [Minimum Number of Pushes to Type Word II](https://leetcode.com/problems/minimum-number-of-pushes-to-type-word-ii/) | Medium | C++ | 2026-07-31 | [solution](2026/2026-07/2026-07-31/3016.md) |
 | 3517 | [Smallest Palindromic Rearrangement I](https://leetcode.com/problems/smallest-palindromic-rearrangement-i/) | Medium | C++ | 2026-07-28 | [solution](2026/2026-07/2026-07-28/3517.md) |
 | 3536 | [Maximum Product of Two Digits](https://leetcode.com/problems/maximum-product-of-two-digits/) | Easy | C++ | 2026-07-26 | [solution](2026/2026-07/2026-07-26/3536.md) |
+| 3731 | [Find Missing Elements](https://leetcode.com/problems/find-missing-elements/) | Easy | C++ | 2026-08-04 | [solution](2026/2026-08/2026-08-04/3731.md) |
 
 <!-- INDEX:END -->

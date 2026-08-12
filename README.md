@@ -4,7 +4,7 @@ daily leetcode
 
 <!-- INDEX:START -->
 
-**12 problems** &nbsp;·&nbsp; 8 Easy &nbsp;·&nbsp; 4 Medium &nbsp;·&nbsp; 0 Hard
+**13 problems** &nbsp;·&nbsp; 8 Easy &nbsp;·&nbsp; 5 Medium &nbsp;·&nbsp; 0 Hard
 
 | # | Problem | Difficulty | Lang | Date | Solution |
 |---|---------|------------|------|------|----------|
@@ -13,6 +13,7 @@ daily leetcode
 | 877 | [Stone Game](https://leetcode.com/problems/stone-game/) | Medium | C++ | 2026-08-02 | [solution](2026/2026-08/2026-08-02/877.md) |
 | 1464 | [Maximum Product of Two Elements in an Array](https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/) | Easy | C++ | 2026-07-27 | [solution](2026/2026-07/2026-07-27/1464.md) |
 | 1979 | [Find Greatest Common Divisor of Array](https://leetcode.com/problems/find-greatest-common-divisor-of-array/) | Easy | C++ | 2026-07-29 | [solution](2026/2026-07/2026-07-29/1979.md) |
+| 2958 | [Length of Longest Subarray With at Most K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/) | Medium | C++ | 2026-08-12 | [solution](2026/2026-08/2026-08-12/2958.md) |
 | 2996 | [Smallest Missing Integer Greater Than Sequential Prefix Sum](https://leetcode.com/problems/smallest-missing-integer-greater-than-sequential-prefix-sum/) | Easy | C++ | 2026-08-11 | [solution](2026/2026-08/2026-08-11/2996.md) |
 | 3014 | [Minimum Number of Pushes to Type Word I](https://leetcode.com/problems/minimum-number-of-pushes-to-type-word-i/) | Easy | C++ | 2026-07-30 | [solution](2026/2026-07/2026-07-30/3014.md) |
 | 3016 | [Minimum Number of Pushes to Type Word II](https://leetcode.com/problems/minimum-number-of-pushes-to-type-word-ii/) | Medium | C++ | 2026-07-31 | [solution](2026/2026-07/2026-07-31/3016.md) |

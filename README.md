@@ -4,7 +4,7 @@ daily leetcode
 
 <!-- INDEX:START -->
 
-**13 problems** &nbsp;·&nbsp; 8 Easy &nbsp;·&nbsp; 5 Medium &nbsp;·&nbsp; 0 Hard
+**14 problems** &nbsp;·&nbsp; 9 Easy &nbsp;·&nbsp; 5 Medium &nbsp;·&nbsp; 0 Hard
 
 | # | Problem | Difficulty | Lang | Date | Solution |
 |---|---------|------------|------|------|----------|
@@ -17,6 +17,7 @@ daily leetcode
 | 2996 | [Smallest Missing Integer Greater Than Sequential Prefix Sum](https://leetcode.com/problems/smallest-missing-integer-greater-than-sequential-prefix-sum/) | Easy | C++ | 2026-08-11 | [solution](2026/2026-08/2026-08-11/2996.md) |
 | 3014 | [Minimum Number of Pushes to Type Word I](https://leetcode.com/problems/minimum-number-of-pushes-to-type-word-i/) | Easy | C++ | 2026-07-30 | [solution](2026/2026-07/2026-07-30/3014.md) |
 | 3016 | [Minimum Number of Pushes to Type Word II](https://leetcode.com/problems/minimum-number-of-pushes-to-type-word-ii/) | Medium | C++ | 2026-07-31 | [solution](2026/2026-07/2026-07-31/3016.md) |
+| 3090 | [Maximum Length Substring With Two Occurrences](https://leetcode.com/problems/maximum-length-substring-with-two-occurrences/) | Easy | C++ | 2026-08-14 | [solution](2026/2026-08/2026-08-14/3090.md) |
 | 3345 | [Smallest Divisible Digit Product I](https://leetcode.com/problems/smallest-divisible-digit-product-i/) | Easy | C++ | 2026-08-06 | [solution](2026/2026-08/2026-08-06/3345.md) |
 | 3517 | [Smallest Palindromic Rearrangement I](https://leetcode.com/problems/smallest-palindromic-rearrangement-i/) | Medium | C++ | 2026-07-28 | [solution](2026/2026-07/2026-07-28/3517.md) |
 | 3536 | [Maximum Product of Two Digits](https://leetcode.com/problems/maximum-product-of-two-digits/) | Easy | C++ | 2026-07-26 | [solution](2026/2026-07/2026-07-26/3536.md) |

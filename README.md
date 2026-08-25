@@ -4,7 +4,7 @@ daily leetcode
 
 <!-- INDEX:START -->
 
-**15 problems** &nbsp;·&nbsp; 10 Easy &nbsp;·&nbsp; 5 Medium &nbsp;·&nbsp; 0 Hard
+**16 problems** &nbsp;·&nbsp; 11 Easy &nbsp;·&nbsp; 5 Medium &nbsp;·&nbsp; 0 Hard
 
 | # | Problem | Difficulty | Lang | Date | Solution |
 |---|---------|------------|------|------|----------|
@@ -22,6 +22,7 @@ daily leetcode
 | 3517 | [Smallest Palindromic Rearrangement I](https://leetcode.com/problems/smallest-palindromic-rearrangement-i/) | Medium | C++ | 2026-07-28 | [solution](2026/2026-07/2026-07-28/3517.md) |
 | 3536 | [Maximum Product of Two Digits](https://leetcode.com/problems/maximum-product-of-two-digits/) | Easy | C++ | 2026-07-26 | [solution](2026/2026-07/2026-07-26/3536.md) |
 | 3622 | [Check Divisibility by Digit Sum and Product](https://leetcode.com/problems/check-divisibility-by-digit-sum-and-product/) | Easy | C++ | 2026-08-22 | [solution](2026/2026-08/2026-08-22/3622.md) |
+| 3718 | [Smallest Missing Multiple of K](https://leetcode.com/problems/smallest-missing-multiple-of-k/) | Easy | C++ | 2026-08-25 | [solution](2026/2026-08/2026-08-25/3718.md) |
 | 3731 | [Find Missing Elements](https://leetcode.com/problems/find-missing-elements/) | Easy | C++ | 2026-08-04 | [solution](2026/2026-08/2026-08-04/3731.md) |
 
 <!-- INDEX:END -->
